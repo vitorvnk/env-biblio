@@ -2,8 +2,12 @@
 
 namespace App\Exceptions;
 
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Exception;
 use Throwable;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
 {
@@ -13,18 +17,31 @@ class Handler extends ExceptionHandler
      * @var array<int, string>
      */
     protected $dontFlash = [
-        'current_password',
         'password',
+        'current_password',
         'password_confirmation',
     ];
 
-    /**
-     * Register the exception handling callbacks for the application.
-     */
-    public function register(): void
+    public function render($request, Exception|Throwable $exception)
     {
-        $this->reportable(function (Throwable $e) {
-            //
-        });
+        if ($exception instanceof \Illuminate\Http\Exceptions\HttpResponseException) {
+            return $exception->getResponse();
+        }
+
+        $statusCode = $exception->getStatusCode() ?? Response::HTTP_INTERNAL_SERVER_ERROR;
+        $message = $exception->getMessage() ?? 'Internal server error';
+
+        $response = [
+            'message' => $message,
+            'status' => $statusCode,
+        ];
+
+        if ($exception instanceof ValidationException) {
+            $response['errors'] = $exception->errors();
+        } else {
+            $response['trace'] = $exception->getTraceAsString();
+        }
+
+        return new JsonResponse($response, $statusCode);
     }
 }

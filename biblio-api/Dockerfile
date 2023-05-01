@@ -33,6 +33,10 @@ RUN pecl install -o -f redis \
     &&  rm -rf /tmp/pear \
     &&  docker-php-ext-enable redis
 
+# Instalar o Node.js e o NPM
+RUN curl -sL -max-time 120 https://deb.nodesource.com/setup_16.x | bash -
+RUN apt-get install -y nodejs
+
 # Set working directory
 WORKDIR /var/www
 
