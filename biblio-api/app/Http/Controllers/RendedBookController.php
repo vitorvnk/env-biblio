@@ -5,62 +5,64 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreRendedBookRequest;
 use App\Http\Requests\UpdateRendedBookRequest;
 use App\Models\RendedBook;
+use Illuminate\Http\JsonResponse;
 
 class RendedBookController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): JsonResponse
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return new JsonResponse(
+            RendedBook::get()
+        );
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreRendedBookRequest $request)
+    public function store(StoreRendedBookRequest $request): JsonResponse
     {
-        //
+        return new JsonResponse(
+            RendedBook::create($request->all())
+        );
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(RendedBook $rendedBook)
+    public function show(RendedBook $rendedBook): JsonResponse
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(RendedBook $rendedBook)
-    {
-        //
+        return new JsonResponse(
+            $rendedBook
+        );
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRendedBookRequest $request, RendedBook $rendedBook)
+    public function update(UpdateRendedBookRequest $request, RendedBook $rendedBook): JsonResponse
     {
-        //
+        $rendedBook->update($request->all());
+        return new JsonResponse(
+            $rendedBook
+        );
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(RendedBook $rendedBook)
+    public function destroy(RendedBook $rendedBook): JsonResponse
     {
-        //
+        if ( $rendedBook->delete() ){
+            return new JsonResponse([
+                'msg' => 'Excluído com sucesso.'
+            ]);
+        }
+
+        return new JsonResponse([
+            'msg' => 'Houveram problemas'
+        ]);
     }
 }

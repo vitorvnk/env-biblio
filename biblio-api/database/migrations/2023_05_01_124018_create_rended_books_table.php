@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('rended_books', function (Blueprint $table) {
             $table->id();
 
-            $table->timestamp('returned_at')->nullable();
+            $table->timestamp('returned_at')->nullable()->default(null);
             $table->unsignedBigInteger('book_id');
             $table->unsignedBigInteger('customer_id');
 

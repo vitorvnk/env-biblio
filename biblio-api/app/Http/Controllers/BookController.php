@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StorebookRequest;
-use App\Http\Requests\UpdatebookRequest;
+use App\Http\Requests\StoreBookRequest;
+use App\Http\Requests\UpdateBookRequest;
 use App\Models\Book;
+use Illuminate\Http\JsonResponse;
 
 class BookController extends Controller
 {
@@ -13,54 +14,55 @@ class BookController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return new JsonResponse(
+            Book::get()
+        );
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorebookRequest $request)
+    public function store(StoreBookRequest $request): JsonResponse
     {
-        //
+        return new JsonResponse(
+            Book::create($request->all())
+        );
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Book $book)
+    public function show(Book $book): JsonResponse
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Book $book)
-    {
-        //
+        return new JsonResponse(
+            $book
+        );
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatebookRequest $request, Book $book)
+    public function update(UpdateBookRequest $request, Book $book): JsonResponse
     {
-        //
+        $book->update($request->all());
+        return new JsonResponse(
+            $book
+        );
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Book $book)
+    public function destroy(Book $book): JsonResponse
     {
-        //
+        if ( $book->delete() ){
+            return new JsonResponse([
+                'msg' => 'Excluído com sucesso.'
+            ]);
+        }
+
+        return new JsonResponse([
+            'msg' => 'Houveram problemas'
+        ]);
     }
 }

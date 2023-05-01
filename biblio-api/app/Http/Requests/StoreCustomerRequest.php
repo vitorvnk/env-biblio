@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\ValidationRule;
 
-class StoreRendedBookRequest extends FormRequest
+class StoreCustomerRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -15,8 +15,9 @@ class StoreRendedBookRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'book_id' => 'required|int',
-            'customer_id' => 'required|int'
+            'name' => 'required|string|max:255',
+            'phone' => 'required|string|max:50',
+            'email' => 'required|email|max:150',
         ];
     }
 }

@@ -28,4 +28,7 @@ Route::middleware('jwt.auth')->group(function () {
 
 Route::prefix('library')->middleware('jwt.auth')->group(function () {
     Route::apiResource('book', 'App\Http\Controllers\BookController');
+    Route::apiResource('customer', 'App\Http\Controllers\CustomerController');
+    Route::apiResource('category', 'App\Http\Controllers\CategoryController');
+    Route::apiResource('rended-book', 'App\Http\Controllers\RendedBookController');
 });

@@ -28,7 +28,7 @@ class Handler extends ExceptionHandler
             return $exception->getResponse();
         }
 
-        $statusCode = $exception->getStatusCode() ?? Response::HTTP_INTERNAL_SERVER_ERROR;
+        $statusCode = method_exists($exception, 'getStatusCode') ? $exception->getStatusCode() : Response::HTTP_INTERNAL_SERVER_ERROR;
         $message = $exception->getMessage() ?? 'Internal server error';
 
         $response = [
