@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreRendedBookRequest;
-use App\Http\Requests\UpdateRendedBookRequest;
 use App\Models\RendedBook;
 use Illuminate\Http\JsonResponse;
+use App\Http\Requests\StoreRendedBookRequest;
+use App\Http\Requests\UpdateRendedBookRequest;
 
 class RendedBookController extends Controller
 {
