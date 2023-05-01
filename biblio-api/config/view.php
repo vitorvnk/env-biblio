@@ -15,6 +15,9 @@ return [
 
     'paths' => [
         resource_path('views'),
+        '/var/www/resources/views/emails',
+        resource_path('views/emails'),
+
     ],
 
     /*
