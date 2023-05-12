@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('rended_books', function (Blueprint $table) {
             $table->id();
 
-            $table->timestamp('returned_at')->nullable()->default(null);
+            $table->timestamp('return_limit_at');
             $table->unsignedBigInteger('book_id');
             $table->unsignedBigInteger('customer_id');
+            $table->timestamp('returned_at')->nullable()->default(null);
 
             $table->foreign('book_id')->references('id')->on('books');
             $table->foreign('customer_id')->references('id')->on('customers');

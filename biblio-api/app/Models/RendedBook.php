@@ -20,8 +20,9 @@ class RendedBook extends Model
      */
     protected $fillable = [
         'book_id',
+        'customer_id',
         'returned_at',
-        'customer_id'
+        'return_limit_at'
     ];
 
     public function book() : BelongsTo
